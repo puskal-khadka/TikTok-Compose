@@ -23,8 +23,10 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.puskal.core.DestinationRoute.AUTHENTICATION_ROUTE
 import com.puskal.core.DestinationRoute.COMMENT_BOTTOM_SHEET_ROUTE
 import com.puskal.core.DestinationRoute.FORMATTED_COMPLETE_CREATOR_VIDEO_ROUTE
+import com.puskal.core.DestinationRoute.FRIENDS_ROUTE
 import com.puskal.core.DestinationRoute.HOME_SCREEN_ROUTE
 import com.puskal.core.DestinationRoute.INBOX_ROUTE
 import com.puskal.theme.TikTokTheme
@@ -47,7 +49,8 @@ fun RootScreen() {
 
 
     val isShowBottomBar = when (currentDestination?.route) {
-        HOME_SCREEN_ROUTE,INBOX_ROUTE, COMMENT_BOTTOM_SHEET_ROUTE, null -> true
+        HOME_SCREEN_ROUTE, INBOX_ROUTE, COMMENT_BOTTOM_SHEET_ROUTE,
+        FRIENDS_ROUTE, AUTHENTICATION_ROUTE, null -> true
         else -> false
     }
     val darkMode = when (currentDestination?.route) {
