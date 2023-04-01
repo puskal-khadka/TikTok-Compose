@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">TikTok Compose</string>
+
+    <string name="home">Home</string>
+    <string name="friends">Friends</string>
+    <string name="inbox">Inbox</string>
+    <string name="profile">Profile</string>
+
+    <string name="following">Following</string>
+    <string name="for_you">For You</string>
+    <string name="see_more">see more</string>
+    <string name="hide">hide</string>
+
+    <string name="messages_and_notification_will">Messages and notifications will appear here </string>
+    <string name="sign_up">Sign up</string>
+    <string name="comments">comments</string>
+    <!--following tab-->
+    <string name="trending_creators">Trending creators</string>
+    <string name="follow_and_account_to_see">Follow an account to see their latest videos here.</string>
+    <string name="follow">Follow</string>
+    <string name="add_comment">Add comment…</string>
+
+    <string name="followers">Followers</string>
+    <string name="likes">Likes</string>
+    <string name="reply">Reply</string>
+
+    <!-- profile -->
+    <string name="this_users_liked_videos">This user\'s liked videos are private</string>
+    <string name="videos_liked_by">Videos liked by</string>
+    <string name="currently_hidden">are currently hidden</string>
+    <string name="no_bio_yet">No bio yet</string>
+
+    <!-- search -->
+    <string name="find_related_content">Find related content</string>
+    <string name="search">Search</string>
+
+    <!-- inbox -->
+    <string name="message_and_notifications_will_appear_here">Message and notifications will appear here</string>
+
+    <!-- authenticaion -->
+    <string name="login_or_sign_up">Log in or sign up</string>
+    <string name="login_in_to_your_existing_account">Login in to your existing account or sign up to create a new account.</string>
+    <string name="use_phone_email_username">Use phone / email / username</string>
+    <string name="continue_with_facebook">Continue with Facebook</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="continue_with_twitter">Continue with Twitter</string>
+    <string name="terms_of_service">Terms of service</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="phone_number_info">Your phone number will be used to improve your TikTok experience, including connecting you with people you may know, personalizing your ads experience, and more. If you sign up with SMS, SMS fee may apply.</string>
+    <string name="learn_more">Learn more</string>
+    <string name="send_code">Send code</string>
+    <string name="phone">Phone</string>
+    <string name="email_username">Email / Username</string>
+    <string name="phone_number">Phone number</string>
+    <string name="enter_email_address_or_username">Enter email address or username</string>
+    <string name="next">Next</string>
+    <string name="by_continuing_you_agree">By continuing, you agree to our </string>
+    <string name="and_acknowledge_that_you_have">and acknowledge that you have read our</string>
+    <string name="to_learn_how_we_collect">to learn how we collect, use, and share your data.</string>
+    <string name="and_confirm_that_you_have_read">and confirm that you have read TikTok\'s</string>
+
+</resources>
