@@ -85,6 +85,7 @@ fun DependencyHandler.moduleDependencies() {
     FEATURE_AUTHENTICATION
     FEATURE_LOGIN_WITH_EMAIL_PHONE
     FEATURE_FRIENDS
+    FEATURE_MY_PROFILE
 }
 
 fun DependencyHandler.media3Dependency() {
@@ -129,5 +130,8 @@ val DependencyHandler.FEATURE_LOGIN_WITH_EMAIL_PHONE
 
 val DependencyHandler.FEATURE_FRIENDS
     get() = implementation(project(mapOf("path" to ":feature:friends")))
+
+val DependencyHandler.FEATURE_MY_PROFILE
+    get() = implementation(project(mapOf("path" to ":feature:myprofile")))
 
 

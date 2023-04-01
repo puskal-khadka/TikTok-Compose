@@ -59,4 +59,7 @@
     <string name="to_learn_how_we_collect">to learn how we collect, use, and share your data.</string>
     <string name="and_confirm_that_you_have_read">and confirm that you have read TikTok\'s</string>
 
+    <!-- my profile -->
+    <string name="sign_up_for_an_account">Sign up for and account</string>
+
 </resources>

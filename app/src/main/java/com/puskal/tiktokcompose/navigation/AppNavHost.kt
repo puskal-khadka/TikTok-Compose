@@ -12,6 +12,7 @@ import com.puskal.friends.friendsNavGraph
 import com.puskal.home.homeNavGraph
 import com.puskal.inbox.inboxNavGraph
 import com.puskal.loginwithemailphone.loginEmailPhoneNavGraph
+import com.puskal.myprofile.myProfileNavGraph
 
 /**
  * Created by Puskal Khadka on 3/14/2023.
@@ -35,5 +36,6 @@ fun AppNavHost(
         authenticationNavGraph(navController)
         loginEmailPhoneNavGraph(navController)
         friendsNavGraph(navController)
+        myProfileNavGraph(navController)
     }
 }
