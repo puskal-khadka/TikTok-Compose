@@ -19,6 +19,7 @@ val Gray20=Color(0XFF202020)
 val GrayLight=Color(0xFF413F3F)
 val SeparatorColor = Color(0X458A8B8F)
 val OverlayWhiteColor =Color(0x6Affffff)
+val WhiteLightDimBg = Color(0xFFF4f4f4)
 
 
 

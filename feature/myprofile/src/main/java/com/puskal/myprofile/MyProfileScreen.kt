@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import com.puskal.composable.CustomButton
 import com.puskal.composable.TopBar
 import com.puskal.core.DestinationRoute
+import com.puskal.core.DestinationRoute.SETTING_ROUTE
 import com.puskal.theme.R
 import com.puskal.theme.SubTextColor
 
@@ -28,7 +29,9 @@ fun MyProfileScreen(navController: NavController) {
             navIcon = null,
             title = stringResource(id = R.string.profile),
             actions = {
-                IconButton(onClick = { }) {
+                IconButton(onClick = {
+                    navController.navigate(SETTING_ROUTE)
+                }) {
                     Icon(painterResource(id = R.drawable.ic_hamburger), contentDescription = null)
                 }
             }

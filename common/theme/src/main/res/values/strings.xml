@@ -62,4 +62,19 @@
     <!-- my profile -->
     <string name="sign_up_for_an_account">Sign up for and account</string>
 
+    <!-- settings -->
+    <string name="settings_and_privacy">Settings and privacy</string>
+    <string name="account">Account</string>
+    <string name="my_account">My account</string>
+    <string name="live">LIVE</string>
+    <string name="playback">Playback</string>
+    <string name="language">Language</string>
+    <string name="free_up_space">Free up space</string>
+    <string name="data_saver">Data saver</string>
+    <string name="wallpaper">Wallpaper</string>
+    <string name="report_a_problem">Report a problem</string>
+    <string name="support">Support</string>
+    <string name="terms_and_policies">Terms and policies</string>
+
+
 </resources>
