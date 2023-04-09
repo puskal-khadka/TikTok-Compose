@@ -24,6 +24,7 @@ import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.puskal.core.DestinationRoute.AUTHENTICATION_ROUTE
+import com.puskal.core.DestinationRoute.CAMERA_ROUTE
 import com.puskal.core.DestinationRoute.COMMENT_BOTTOM_SHEET_ROUTE
 import com.puskal.core.DestinationRoute.FORMATTED_COMPLETE_CREATOR_VIDEO_ROUTE
 import com.puskal.core.DestinationRoute.FRIENDS_ROUTE
@@ -55,7 +56,7 @@ fun RootScreen() {
         else -> false
     }
     val darkMode = when (currentDestination?.route) {
-        HOME_SCREEN_ROUTE, FORMATTED_COMPLETE_CREATOR_VIDEO_ROUTE, null -> true
+        HOME_SCREEN_ROUTE, FORMATTED_COMPLETE_CREATOR_VIDEO_ROUTE, CAMERA_ROUTE, null -> true
         else -> false
     }
 

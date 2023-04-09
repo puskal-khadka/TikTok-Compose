@@ -1,9 +1,11 @@
 import Version.AndroidXTestVersion
 import Version.AppCompat
+import Version.CameraXVersion
 import Version.ConstraintLayoutCompose
 import Version.CoreKtx
 import Version.EspressoCore
 import Version.GsonVersion
+import Version.GuavaAndroid
 import Version.HiltAndroidVersion
 import Version.HiltNavigationCompose
 import Version.JunitExtKtx
@@ -36,6 +38,8 @@ object Version {
     const val SplashScreenApi = "1.1.0-alpha01"
     const val ConstraintLayoutCompose = "1.0.1"
     const val GsonVersion = "2.10.1"
+    const val CameraXVersion = "1.3.0-alpha05"
+    const val GuavaAndroid="31.0.1-android"
 }
 
 
@@ -63,6 +67,7 @@ object Libraries {
 
     object Google {
         const val gson = "com.google.code.gson:gson:$GsonVersion"
+        const val guava="com.google.guava:guava:$GuavaAndroid"
     }
 
     object Accompanist {
@@ -79,6 +84,8 @@ object Libraries {
             "com.google.accompanist:accompanist-navigation-material:${Version.Accompanist}"
         const val navigationAnimation =
             "com.google.accompanist:accompanist-navigation-animation:${Version.Accompanist}"
+        const val permission =
+            "com.google.accompanist:accompanist-permissions:${Version.Accompanist}"
     }
 
     object Naviagtion {
@@ -112,6 +119,15 @@ object Libraries {
         //hilt compose
         const val hiltNavigationCompse =
             "androidx.hilt:hilt-navigation-compose:$HiltNavigationCompose"
+    }
+
+    object CameraX {
+        const val cameraCore = "androidx.camera:camera-core:$CameraXVersion"
+        const val camera2 = "androidx.camera:camera-camera2:$CameraXVersion"
+        const val cameraLifecycle = "androidx.camera:camera-lifecycle:$CameraXVersion"
+        const val cameraVideo = "androidx.camera:camera-video:$CameraXVersion"
+        const val cameraView = "androidx.camera:camera-view:$CameraXVersion"
+        const val CameraExt = "androidx.camera:camera-extensions:$CameraXVersion"
     }
 }
 

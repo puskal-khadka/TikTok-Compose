@@ -1,5 +1,7 @@
 package com.puskal.core.extension
 
+import android.content.Context
+import android.provider.Settings
 import java.text.DecimalFormat
 
 /**
@@ -23,3 +25,6 @@ fun randomUploadDate(): String = "${(1..24).random()}h"
 
 
 fun Pair<String, String>.getFormattedInternationalNumber() = "${this.first}-${this.second}".trim()
+
+fun Context.getCurrentBrightness():Float= Settings.System.getInt(this.contentResolver, Settings.System.SCREEN_BRIGHTNESS)
+    .toFloat().div(255)

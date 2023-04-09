@@ -25,7 +25,7 @@ import com.puskal.composable.TopBar
 import com.puskal.core.AppContract.Type.INSTAGRAM
 import com.puskal.core.AppContract.Type.YOUTUBE
 import com.puskal.core.DestinationRoute.CREATOR_VIDEO_ROUTE
-import com.puskal.core.utils.ShareUtils.redirectToApp
+import com.puskal.core.utils.IntentUtils.redirectToApp
 import com.puskal.creatorprofile.component.*
 import com.puskal.data.model.SocialMediaType
 import com.puskal.data.model.UserModel

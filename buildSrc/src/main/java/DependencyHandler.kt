@@ -52,6 +52,7 @@ fun DependencyHandler.baseDependencies() {
     implementation(Libraries.Google.gson)
     implementation(Libraries.Hilt.hiltAndroid)
     kapt(Libraries.Hilt.hiltCompiler)
+    implementation(Libraries.Google.guava)
 }
 
 fun DependencyHandler.accompanistDependencies() {
@@ -62,6 +63,7 @@ fun DependencyHandler.accompanistDependencies() {
     implementation(Libraries.Accompanist.systemuicontroller)
     implementation(Libraries.Accompanist.navigationMaterial)
     implementation(Libraries.Accompanist.navigationAnimation)
+    implementation(Libraries.Accompanist.permission)
 }
 
 fun DependencyHandler.testDependencies() {
@@ -70,6 +72,21 @@ fun DependencyHandler.testDependencies() {
     androidTestImplementation(Libraries.Test.runner)
     androidTestImplementation(Libraries.Test.junitExtKtx)
     androidTestImplementation(Libraries.Test.truthExt)
+}
+
+fun DependencyHandler.media3Dependency() {
+    implementation(Libraries.AudioVideo.exoplayer)
+    implementation(Libraries.AudioVideo.expplayerDash)
+    implementation(Libraries.AudioVideo.media3Ui)
+}
+
+fun DependencyHandler.cameraXDependencies() {
+    implementation(Libraries.CameraX.cameraCore)
+    implementation(Libraries.CameraX.camera2)
+    implementation(Libraries.CameraX.cameraLifecycle)
+    implementation(Libraries.CameraX.cameraVideo)
+    implementation(Libraries.CameraX.cameraView)
+    implementation(Libraries.CameraX.CameraExt)
 }
 
 fun DependencyHandler.moduleDependencies() {
@@ -87,12 +104,7 @@ fun DependencyHandler.moduleDependencies() {
     FEATURE_FRIENDS
     FEATURE_MY_PROFILE
     FEATURE_SETTING
-}
-
-fun DependencyHandler.media3Dependency() {
-    implementation(Libraries.AudioVideo.exoplayer)
-    implementation(Libraries.AudioVideo.expplayerDash)
-    implementation(Libraries.AudioVideo.media3Ui)
+    FEATURE_CAMERA_MEDIA
 }
 
 
@@ -138,4 +150,5 @@ val DependencyHandler.FEATURE_MY_PROFILE
 val DependencyHandler.FEATURE_SETTING
     get() = implementation(project(mapOf("path" to ":feature:setting")))
 
-
+val DependencyHandler.FEATURE_CAMERA_MEDIA
+    get() = implementation(project(mapOf("path" to ":feature:cameramedia")))

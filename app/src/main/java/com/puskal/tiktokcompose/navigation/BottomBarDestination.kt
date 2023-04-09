@@ -2,7 +2,7 @@ package com.puskal.tiktokcompose.navigation
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.puskal.core.DestinationRoute.ADD_CONTENT_ROUTE
+import com.puskal.core.DestinationRoute.CAMERA_ROUTE
 import com.puskal.core.DestinationRoute.FRIENDS_ROUTE
 import com.puskal.core.DestinationRoute.HOME_SCREEN_ROUTE
 import com.puskal.core.DestinationRoute.INBOX_ROUTE
@@ -36,7 +36,7 @@ enum class BottomBarDestination(
     ),
 
     ADD(
-        route = ADD_CONTENT_ROUTE,
+        route = CAMERA_ROUTE,
         unFilledIcon = R.drawable.ic_add_dark,
         darkModeIcon = R.drawable.ic_add_light
     ),

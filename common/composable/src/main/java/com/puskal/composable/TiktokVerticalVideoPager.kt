@@ -28,7 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.puskal.core.extension.Space
-import com.puskal.core.utils.ShareUtils.share
+import com.puskal.core.utils.IntentUtils.share
 import com.puskal.data.model.VideoModel
 import com.puskal.theme.*
 import com.puskal.theme.R

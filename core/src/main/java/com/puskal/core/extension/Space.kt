@@ -20,4 +20,10 @@ fun Dp.Space() = Spacer(
 )
 
 @Composable
+fun SmallSpace() = Spacer(modifier = Modifier.height(16.dp))
+
+@Composable
 fun MediumSpace() = Spacer(modifier = Modifier.height(26.dp))
+
+@Composable
+fun LargeSpace() = Spacer(modifier = Modifier.height(32.dp))

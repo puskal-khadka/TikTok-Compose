@@ -76,5 +76,30 @@
     <string name="support">Support</string>
     <string name="terms_and_policies">Terms and policies</string>
 
+    <!-- camera media -->
+    <string name="allow_tiktok_to_access_your">Allow TikTok to access  your camera and microphone</string>
+    <string name="take_photos_record_videos_or_preview">Take photos, record videos or preview effect on camera.</string>
+    <string name="you_can_change_preference_in_setting">You can change preferences at any time in your device settings.</string>
+    <string name="access_camera">Access camera</string>
+    <string name="access_microhpone">Access microphone</string>
+    <string name="effects">Effects</string>
+    <string name="camera">Camera</string>
+    <string name="story" >Story</string>
+    <string name="templates">Templates</string>
+    <string name="upload">Upload</string>
+    <string name="photo">Photo</string>
+    <string name="video">Video</string>
+    <string name="text">Text</string>
+    <string name="shoot_without_microphone">Shoot without microphone</string>
+    <string name="record_videos_and_experiences_different">record videos and experience different visual effects.</string>
+    <string name="add_sound">Add sound</string>
+    <string name="flip">Flip</string>
+    <string name="speed">Speed</string>
+    <string name="beauty">Beauty</string>
+    <string name="filters">Filters</string>
+    <string name="mirror">Mirror</string>
+    <string name="timer">Timer</string>
+    <string name="flash">Flash</string>
+    <string name="upload_photos">Upload photos</string>
 
 </resources>
