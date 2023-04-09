@@ -1,6 +1,8 @@
 package com.puskal.tiktokcompose
 
+import android.app.Activity
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.foundation.layout.Column
@@ -16,6 +18,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.material.BottomSheetNavigator
@@ -48,6 +51,7 @@ fun RootScreen() {
     val navController = rememberNavController(bottomSheetNavigator)
     val currentBackStackEntryAsState by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntryAsState?.destination
+    val context= LocalContext.current
 
 
     val isShowBottomBar = when (currentDestination?.route) {
@@ -58,6 +62,12 @@ fun RootScreen() {
     val darkMode = when (currentDestination?.route) {
         HOME_SCREEN_ROUTE, FORMATTED_COMPLETE_CREATOR_VIDEO_ROUTE, CAMERA_ROUTE, null -> true
         else -> false
+    }
+
+    if(currentDestination?.route== HOME_SCREEN_ROUTE){
+       BackHandler {
+           (context as? Activity)?.finish()
+       }
     }
 
     TikTokTheme(darkTheme = darkMode) {

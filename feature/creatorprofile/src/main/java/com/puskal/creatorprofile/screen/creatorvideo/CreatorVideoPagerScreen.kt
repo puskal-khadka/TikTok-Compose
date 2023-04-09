@@ -53,6 +53,7 @@ fun CreatorVideoPagerScreen(
             viewState?.creatorVideosList?.let {
                 TikTokVerticalVideoPager(
                     videos = it,
+                    showUploadDate = true,
                     onclickComment = onclickComment,
                     onClickLike = { s: String, b: Boolean -> },
                     onclickFavourite = {},

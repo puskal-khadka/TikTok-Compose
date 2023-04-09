@@ -42,9 +42,10 @@ import kotlinx.coroutines.launch
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 @Composable
 fun TikTokVerticalVideoPager(
+    modifier: Modifier = Modifier,
     videos: List<VideoModel>,
     initialPage: Int? = 0,
-    modifier: Modifier = Modifier,
+    showUploadDate: Boolean = false,
     onclickComment: (videoId: String) -> Unit,
     onClickLike: (videoId: String, likeStatus: Boolean) -> Unit,
     onclickFavourite: (videoId: String) -> Unit,
@@ -113,6 +114,7 @@ fun TikTokVerticalVideoPager(
                             .fillMaxWidth()
                             .weight(1f),
                         item = videos[it],
+                        showUploadDate=showUploadDate,
                         onClickAudio = onClickAudio,
                         onClickUser = onClickUser,
                     )
@@ -328,7 +330,10 @@ fun LikeIconButton(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FooterUi(
-    modifier: Modifier, item: VideoModel, onClickAudio: (VideoModel) -> Unit,
+    modifier: Modifier,
+    item: VideoModel,
+    showUploadDate: Boolean,
+    onClickAudio: (VideoModel) -> Unit,
     onClickUser: (userId: Long) -> Unit,
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.Bottom) {
@@ -338,11 +343,13 @@ fun FooterUi(
             Text(
                 text = item.authorDetails.fullName, style = MaterialTheme.typography.bodyMedium
             )
-            Text(
-                text = " . ${item.createdAt} ago",
-                style = MaterialTheme.typography.labelLarge,
-                color = Color.White.copy(alpha = 0.6f)
-            )
+            if (showUploadDate) {
+                Text(
+                    text = " . ${item.createdAt} ago",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = Color.White.copy(alpha = 0.6f)
+                )
+            }
         }
         5.dp.Space()
         Text(
