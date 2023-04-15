@@ -229,6 +229,7 @@ fun CommentUserField() {
                     unfocusedBorderColor = Color.Transparent
                 ),
                 modifier = Modifier.height(46.dp),
+                enabled=false,
                 trailingIcon = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
