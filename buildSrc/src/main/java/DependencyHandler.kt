@@ -67,6 +67,7 @@ fun DependencyHandler.accompanistDependencies() {
 }
 
 fun DependencyHandler.testDependencies() {
+    testImplementation(Libraries.Test.junit)
     androidTestImplementation(Libraries.Test.testCoreKtx)
     androidTestImplementation(Libraries.Test.espressorCore)
     androidTestImplementation(Libraries.Test.runner)

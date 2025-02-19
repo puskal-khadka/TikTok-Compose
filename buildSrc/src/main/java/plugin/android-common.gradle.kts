@@ -10,6 +10,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.parcelize")
+    id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.dagger.hilt.android")
     kotlin("kapt")
 }
@@ -18,7 +19,6 @@ android {
     compileSdk = AppConfig.compileSdk
     defaultConfig {
         minSdk = AppConfig.minSdk
-        targetSdk = AppConfig.targetSdk
         consumerProguardFiles ("consumer-rules.pro")
     }
 
@@ -28,12 +28,12 @@ android {
         release {}
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 
     buildFeatures {
@@ -44,7 +44,7 @@ android {
         kotlinCompilerExtensionVersion = AppConfig.KotlinCompilerExtension
     }
 
-    packagingOptions {
+    packaging {
         resources.excludes.apply {
             add("META-INF/AL2.0")
             add("META-INF/LGPL2.1")

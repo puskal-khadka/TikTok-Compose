@@ -2,6 +2,9 @@ plugins {
     id("plugin.android-common")
 }
 
+android {
+    namespace = "com.puskal.cameramedia"
+}
 
 dependencies {
     COMMON_THEME
@@ -10,4 +13,5 @@ dependencies {
     DATA
     CORE
     cameraXDependencies()
+    testDependencies()
 }

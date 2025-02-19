@@ -2,6 +2,9 @@ plugins {
     id("plugin.android-common")
 }
 
+android {
+    namespace = "com.puskal.commentlisting"
+}
 
 dependencies {
     COMMON_THEME

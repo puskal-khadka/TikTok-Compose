@@ -8,6 +8,7 @@ import Version.GsonVersion
 import Version.GuavaAndroid
 import Version.HiltAndroidVersion
 import Version.HiltNavigationCompose
+import Version.Junit
 import Version.JunitExtKtx
 import Version.LifecycleRunTimeKtx
 import Version.Media3
@@ -20,22 +21,23 @@ import Version.TruthExt
  * Created by Puskal Khadka on 3/14/2023.
  */
 object Version {
-    const val CoreKtx = "1.9.0"
-    const val AppCompat = "1.6.1"
+    const val CoreKtx = "1.13.1"
+    const val AppCompat = "1.7.0"
     const val ComposeBom = "2023.01.00"
     const val LifecycleRunTimeKtx = "2.3.1"
     const val NavigationCompose = "2.5.3"
     const val AndroidXTestVersion = "1.5.0"
     const val EspressoCore = "3.5.1"
     const val TestRunnerVersion = "1.5.2"
+    const val Junit = "4.12"
     const val JunitExtKtx = "1.1.5"
     const val TruthExt = "1.5.0"
     const val Coil = "2.2.2"
     const val HiltNavigationCompose = "1.0.0"
-    const val HiltAndroidVersion = "2.44"
+    const val HiltAndroidVersion = "2.52"
     const val Media3 = "1.0.0-rc02"
     const val Accompanist = "0.28.0"
-    const val SplashScreenApi = "1.1.0-alpha01"
+    const val SplashScreenApi = "1.0.1"
     const val ConstraintLayoutCompose = "1.0.1"
     const val GsonVersion = "2.10.1"
     const val CameraXVersion = "1.3.0-alpha05"
@@ -107,6 +109,7 @@ object Libraries {
         const val testCoreKtx = "androidx.test:core-ktx:$AndroidXTestVersion"
         const val espressorCore = "androidx.test.espresso:espresso-core:$EspressoCore"
         const val junitExtKtx = "androidx.test.ext:junit-ktx:$JunitExtKtx"
+        const val junit = "junit:junit:$Junit"
         const val truthExt = "androidx.test.ext:truth:$TruthExt"
         const val runner = "androidx.test:runner:$TestRunnerVersion"
     }
