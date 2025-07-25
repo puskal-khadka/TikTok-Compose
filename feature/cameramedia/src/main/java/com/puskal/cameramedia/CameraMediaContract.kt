@@ -41,7 +41,6 @@ enum class CameraController(
     SPEED(title = R.string.speed, iconRes = R.drawable.ic_speed),
     BEAUTY(title = R.string.beauty, iconRes = R.drawable.ic_profile_fill),
     FILTERS(title = R.string.filters, iconVector = Icons.Filled.InvertColors),
-    MIRROR(title = R.string.mirror, iconRes = R.drawable.ic_mirror),
     TIMER(title = R.string.timer, iconRes = R.drawable.ic_timer),
     FLASH(title = R.string.flash, iconRes = R.drawable.ic_flash),
 }

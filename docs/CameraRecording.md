@@ -159,12 +159,6 @@ Real‑time effects on the camera screen rely on the filter support built in to
 composable updates `cameraView.filter = selectedFilter.newInstance()` so both the
 preview and the recorded video use that effect.
 
-### Mirrored Output
-
-The preview can be flipped horizontally by tapping the **Mirror** controller on the
-camera screen. When enabled, captured photos are mirrored using a bitmap
-transformation and videos are transcoded with `Mp4Composer.flipHorizontal(true)`
-so the saved files match the preview.
 
 The repository also contains a `CameraGlPreviewView` class that demonstrates how
 `mp4compose` `GlFilter` implementations could be applied to CameraX frames. This

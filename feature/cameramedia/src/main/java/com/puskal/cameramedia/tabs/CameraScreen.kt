@@ -419,7 +419,6 @@ fun CameraPreview(
                     CameraController.FILTERS -> {
                         showFilterSheet = true
                     }
-                    CameraController.MIRROR -> isMirror = !isMirror
                     else -> {}
                 }
             }
@@ -611,12 +610,9 @@ fun CameraSideControllerSection(
         if (defaultCameraFacing == Facing.FRONT) remove(CameraController.FLASH)
     }
 
-    val isMirrorEnabled = defaultCameraFacing == Facing.FRONT
-
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(14.dp)) {
         controllers.forEach { controller ->
             val enabled = when (controller) {
-                CameraController.MIRROR -> isMirrorEnabled
                 CameraController.FLASH -> defaultCameraFacing == Facing.BACK
                 else -> true
             }
