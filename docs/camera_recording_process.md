@@ -36,6 +36,5 @@ This document describes the technical stack and the end-to-end flow that occurs 
 
 ## References
 
-- [CameraView capturing docs](../feature/cameracapture/docs/_docs/capturing-media.md)
-- [Camera engine and preview options](../feature/cameracapture/docs/_docs/previews.md)
-
+- [CameraView capturing docs](https://natario1.github.io/CameraView/docs/capturing-media/)
+- [Camera engine and preview options](https://natario1.github.io/CameraView/docs/previews/)

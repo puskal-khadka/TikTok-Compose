@@ -21,7 +21,7 @@ The project is built with modern Android technologies. The overall tech stack is
 
 Source: `README.md` lines 18–30.
 
-For the camera feature, the `feature:cameramedia` module depends on the CameraX libraries and a bundled `cameracapture` module which contains the `CameraView` library:
+For the camera feature, the `feature:cameramedia` module depends on the CameraX libraries plus Maven artifacts for `CameraView` and `mp4compose`:
 
 ```
 dependencies {
@@ -30,9 +30,11 @@ dependencies {
     DOMAIN
     DATA
     CORE
-    FEATURE_FILTER
     cameraXDependencies()
-    implementation(project(":feature:cameracapture"))
+    media3Dependency()
+    implementation(project(":feature:video-trimmer"))
+    implementation("com.otaliastudios:cameraview:2.7.2")
+    implementation("com.github.MasayukiSuda:Mp4Composer-android:v0.4.1")
 }
 ```
 
@@ -196,7 +198,7 @@ This class manages its own EGL context for rendering and can be used for custom 
 
 ## Performance Notes
 
-- `CameraView` operates on top of Camera2 and handles recording through optimized components (`Full2VideoRecorder`, `AudioMediaEncoder`, etc.) from the bundled `cameracapture` module. The module includes performance tweaks like frame processing size limits.
+- `CameraView` operates on top of Camera2 and handles recording through optimized components (`Full2VideoRecorder`, `AudioMediaEncoder`, etc.) provided by the upstream library. The artifact ships with performance tweaks like frame processing size limits.
 - The custom OpenGL preview performs rendering on a texture surface using shaders, which is efficient but should be handled on a separate thread if extended. The current implementation runs in the view’s update callback and swaps buffers for each frame.
 - Screen brightness is temporarily increased to 25% or more during recording to improve visibility without affecting the user’s global setting.
 
