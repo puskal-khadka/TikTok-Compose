@@ -73,6 +73,7 @@ import dev.chrisbanes.snapper.rememberLazyListSnapperLayoutInfo
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 import com.otaliastudios.cameraview.filter.Filters
+import com.otaliastudios.cameraview.markers.DefaultAutoFocusMarker
 import com.otaliastudios.cameraview.filter.Filter as CameraFilter
 import com.daasuu.mp4compose.composer.Mp4Composer
 
@@ -277,6 +278,7 @@ fun CameraPreview(
             mapGesture(Gesture.PINCH, GestureAction.ZOOM)
             mapGesture(Gesture.TAP, GestureAction.AUTO_FOCUS)
             mapGesture(Gesture.LONG_TAP, GestureAction.TAKE_PICTURE)
+            setAutoFocusMarker(DefaultAutoFocusMarker())
         }
     }
 
@@ -419,7 +421,6 @@ fun CameraPreview(
                     CameraController.FILTERS -> {
                         showFilterSheet = true
                     }
-                    CameraController.MIRROR -> isMirror = !isMirror
                     else -> {}
                 }
             }
@@ -611,12 +612,9 @@ fun CameraSideControllerSection(
         if (defaultCameraFacing == Facing.FRONT) remove(CameraController.FLASH)
     }
 
-    val isMirrorEnabled = defaultCameraFacing == Facing.FRONT
-
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(14.dp)) {
         controllers.forEach { controller ->
             val enabled = when (controller) {
-                CameraController.MIRROR -> isMirrorEnabled
                 CameraController.FLASH -> defaultCameraFacing == Facing.BACK
                 else -> true
             }

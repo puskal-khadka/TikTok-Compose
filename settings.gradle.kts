@@ -10,6 +10,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven(url = "https://jitpack.io")
     }
 }
 rootProject.name = "tiktokcompose"
@@ -29,6 +30,4 @@ include(":feature:friends")
 include(":feature:myprofile")
 include(":feature:setting")
 include(":feature:cameramedia")
-include(":feature:cameracapture")
 include(":feature:video-trimmer")
-include(":feature:mp4compose")

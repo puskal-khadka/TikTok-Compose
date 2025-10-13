@@ -8,7 +8,7 @@ This document explains what happens when the user captures a photo from the came
 - **Hilt** for dependency injection
 - **Coroutines** for asynchronous tasks
 - **Media3 / ExoPlayer** for video playback
-- **CameraX** with a customized `CameraView` implementation for capturing photos and videos
+- **CameraX** with the `CameraView` dependency (`com.otaliastudios:cameraview`) for capturing photos and videos
 - Modular architecture following Clean Architecture and MVVM
 
 The full list of main libraries is highlighted in the project README.

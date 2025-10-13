@@ -5,7 +5,7 @@ This document explains what happens under the hood when the camera screen record
 ## Technical Stack
 
 - **Jetpack Compose** – UI toolkit used for building the camera screen (`CameraScreen.kt`).
-- **CameraView (feature `cameracapture`)** – Open‑source camera library bundled in the project for camera operations. It uses the underlying `Camera1`/`Camera2` APIs and `MediaCodec` to encode media.
+- **CameraView** – Open‑source camera library consumed via the Maven artifact `com.otaliastudios:cameraview`. It uses the underlying `Camera1`/`Camera2` APIs and `MediaCodec` to encode media.
 - **CameraX** – Included only for the sample `CameraGlPreviewView` class. The main camera preview relies on `CameraView`.
 - **mp4compose** – Library available for post‑processing and video editing with OpenGL filters.
 - **Kotlin + Coroutines** – Main language and concurrency toolkit.
