@@ -49,6 +49,8 @@ android {
 
     buildFeatures {
         compose = true
+        // Ensure BuildConfig class is generated for accessing compile-time constants
+        buildConfig = true
     }
 
     composeOptions {

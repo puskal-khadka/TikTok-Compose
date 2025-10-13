@@ -25,6 +25,7 @@ fun DependencyHandler.composeDependencies() {
     implementation(Libraries.Compose.composeFoundation)
     implementation(Libraries.Compose.composeRuntime)
     implementation(Libraries.Compose.composeMaterial3)
+    implementation(Libraries.Compose.materialIconsExtended)
 
     //navgation
     implementation(Libraries.Naviagtion.navigationCompose)
@@ -48,6 +49,7 @@ fun DependencyHandler.baseDependencies() {
     implementation(Libraries.AndroidX.appCompat)
     implementation(Libraries.AndroidX.coreKtx)
     implementation(Libraries.AndroidX.lifecycleRunTimeKtx)
+    implementation(Libraries.AndroidX.lifecycleViewModelKtx)
     implementation(Libraries.AndroidX.splashScreen)
     implementation(Libraries.Google.gson)
     implementation(Libraries.Hilt.hiltAndroid)
@@ -78,6 +80,7 @@ fun DependencyHandler.media3Dependency() {
     implementation(Libraries.AudioVideo.exoplayer)
     implementation(Libraries.AudioVideo.expplayerDash)
     implementation(Libraries.AudioVideo.media3Ui)
+    implementation(Libraries.AudioVideo.transformer)
 }
 
 fun DependencyHandler.cameraXDependencies() {
@@ -152,3 +155,4 @@ val DependencyHandler.FEATURE_SETTING
 
 val DependencyHandler.FEATURE_CAMERA_MEDIA
     get() = implementation(project(mapOf("path" to ":feature:cameramedia")))
+

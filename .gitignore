@@ -16,3 +16,7 @@
 local.properties
 /.idea/
 /buildSrc/build/
+common/videotrimmer/build
+common/theme/build
+common/composable/build
+.claude/

@@ -34,14 +34,16 @@ fun HomeScreen(
     navController: NavController
 ) {
     val tabItems = arrayListOf(R.string.following, R.string.for_you)
-    val pagerState = rememberPagerState(initialPage = 1)
+    val pagerState = rememberPagerState(
+        initialPage = 1,
+        pageCount = { tabItems.size }
+    )
     val coroutineScope = rememberCoroutineScope()
 
     TikTokTheme(darkTheme = true) {
         Box(modifier = Modifier.fillMaxSize()) {
 
             HorizontalPager(
-                pageCount = tabItems.size,
                 state = pagerState,
             ) {
                 when (it) {

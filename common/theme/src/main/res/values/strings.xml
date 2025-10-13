@@ -33,6 +33,7 @@
     <!-- search -->
     <string name="find_related_content">Find related content</string>
     <string name="search">Search</string>
+    <string name="search_singer_music_lyric_emotion">Search singer, music, lyric, emotion</string>
 
     <!-- inbox -->
     <string name="message_and_notifications_will_appear_here">Message and notifications will appear here</string>
@@ -53,6 +54,7 @@
     <string name="email_username">Email / Username</string>
     <string name="phone_number">Phone number</string>
     <string name="enter_email_address_or_username">Enter email address or username</string>
+    <string name="password">Password</string>
     <string name="next">Next</string>
     <string name="by_continuing_you_agree">By continuing, you agree to our </string>
     <string name="and_acknowledge_that_you_have">and acknowledge that you have read our</string>
@@ -97,9 +99,52 @@
     <string name="speed">Speed</string>
     <string name="beauty">Beauty</string>
     <string name="filters">Filters</string>
-    <string name="mirror">Mirror</string>
     <string name="timer">Timer</string>
     <string name="flash">Flash</string>
     <string name="upload_photos">Upload photos</string>
+    <string name="logged_in_as">Logged in as %1$s</string>
+    <string name="demo_video_compositor">This is a demo for video compositor</string>
+
+    <string name="trim">Trim</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+
+    <!-- choose sound -->
+    <string name="sounds">Sounds</string>
+    <string name="cut">Cut</string>
+    <string name="favorite">Favorite</string>
+    <string name="original_sound_of">Original sound - %1$s</string>
+    <string name="number_posts">%1$d posts</string>
+
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
+    <string name="fullscreen">Fullscreen</string>
+
+    <string name="settings">Settings</string>
+    <string name="share">Share</string>
+    <string name="challenge">Challenge</string>
+    <string name="stickers">Stickers</string>
+    <string name="crop_resize">Crop/Resize</string>
+    <string name="audio_transcript">Audio transcript</string>
+    <string name="enhance_video_quality">Enhance quality</string>
+    <string name="change_voice">Change voice</string>
+    <string name="drawing_painter">Drawing</string>
+    <string name="original_sound">Original Sound</string>
+    <string name="music_off">Music Off</string>
+    <string name="volume">Volume</string>
+    <string name="subtitle">Subtitle</string>
+    <string name="import_audio">Import Audio</string>
+    <string name="recommended">Recommended</string>
+    <string name="hot">Hot</string>
+    <string name="favorites">Favorites</string>
+    <string name="used">Used</string>
+
+    <string name="friend_daily">Friend Daily</string>
+    <string name="publish">Publish</string>
+    <string name="location">Location</string>
+    <string name="add_labels">Add labels</string>
+    <string name="private_public">Private / Public</string>
 
 </resources>

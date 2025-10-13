@@ -15,6 +15,7 @@ plugins {
 }
 
 android {
+    namespace = "com.puskal." + project.name.replace("-", "")
     compileSdk = AppConfig.compileSdk
     defaultConfig {
         minSdk = AppConfig.minSdk

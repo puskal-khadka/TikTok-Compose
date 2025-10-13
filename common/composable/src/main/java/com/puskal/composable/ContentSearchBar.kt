@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.*
-import androidx.compose.material3.TextFieldDefaults.OutlinedBorderContainerBox
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -35,11 +35,14 @@ fun ContentSearchBar(
     marginHorizontal: Dp = 16.dp,
     marginTop: Dp = 8.dp
 ) {
-    val textFieldColors = TextFieldDefaults.outlinedTextFieldColors(
+    val textFieldColors = OutlinedTextFieldDefaults.colors(
+        focusedTextColor = Color.White,
+        unfocusedTextColor = Color.White,
+        focusedPlaceholderColor = Color.White,
+        unfocusedPlaceholderColor = Color.White,
+        focusedContainerColor = Color.Transparent,
+        unfocusedContainerColor = Color.Transparent,
         unfocusedBorderColor = OverlayWhiteColor,
-        containerColor = Color.Transparent,
-        textColor = Color.White,
-        placeholderColor = Color.White
     )
     val shape = RoundedCornerShape(8.dp)
     val interactionSource = remember {
@@ -72,7 +75,7 @@ fun ContentSearchBar(
             singleLine = true,
             readOnly = readOnly,
             decorationBox = {
-                TextFieldDefaults.TextFieldDecorationBox(
+                OutlinedTextFieldDefaults.DecorationBox(
                     value = "",
                     innerTextField = { },
                     enabled = true,
@@ -85,7 +88,6 @@ fun ContentSearchBar(
                         )
                     },
                     colors = textFieldColors,
-                    shape = shape,
                     trailingIcon = {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
@@ -112,14 +114,14 @@ fun ContentSearchBar(
                     interactionSource = interactionSource,
                     contentPadding = PaddingValues(4.dp),
                     container = {
-                        OutlinedBorderContainerBox(
+                        OutlinedTextFieldDefaults.Container(
+                            enabled = true,
+                            isError = false,
                             interactionSource = interactionSource,
                             colors = textFieldColors,
                             shape = shape,
                             focusedBorderThickness = 1.dp,
-                            unfocusedBorderThickness = 1.dp,
-                            enabled = true,
-                            isError = false
+                            unfocusedBorderThickness = 1.dp
                         )
                     }
                 )

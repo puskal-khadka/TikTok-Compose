@@ -82,7 +82,7 @@ fun TemplateScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ColumnScope.TemplatePager(templates: List<TemplateModel>) {
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = { templates.size })
 
     val currentItem by remember {
         derivedStateOf {
@@ -99,9 +99,8 @@ fun ColumnScope.TemplatePager(templates: List<TemplateModel>) {
     )
     MediumSpace()
     HorizontalPager(
-        pageCount = templates.size,
-        contentPadding = PaddingValues(horizontal = 64.dp),
         state = pagerState,
+        contentPadding = PaddingValues(horizontal = 64.dp),
         modifier = Modifier.weight(1f)
     ) {
         SingleTemplateCard(page = it, pagerState = pagerState, item = templates[it])

@@ -22,7 +22,7 @@ import Version.TruthExt
 object Version {
     const val CoreKtx = "1.9.0"
     const val AppCompat = "1.6.1"
-    const val ComposeBom = "2023.01.00"
+    const val ComposeBom = "2025.05.00"
     const val LifecycleRunTimeKtx = "2.3.1"
     const val NavigationCompose = "2.5.3"
     const val AndroidXTestVersion = "1.5.0"
@@ -33,13 +33,14 @@ object Version {
     const val Coil = "2.2.2"
     const val HiltNavigationCompose = "1.0.0"
     const val HiltAndroidVersion = "2.44"
-    const val Media3 = "1.0.0-rc02"
-    const val Accompanist = "0.28.0"
-    const val SplashScreenApi = "1.1.0-alpha01"
+    const val Media3 = "1.3.1"
+    const val Accompanist = "0.36.0"
+    const val SplashScreenApi = "1.0.1"
     const val ConstraintLayoutCompose = "1.0.1"
     const val GsonVersion = "2.10.1"
     const val CameraXVersion = "1.3.0-alpha05"
     const val GuavaAndroid="31.0.1-android"
+    const val Material = "1.11.0"
 }
 
 
@@ -49,6 +50,8 @@ object Libraries {
         const val appCompat = "androidx.appcompat:appcompat:$AppCompat"
         const val lifecycleRunTimeKtx =
             "androidx.lifecycle:lifecycle-runtime-ktx:$LifecycleRunTimeKtx"
+        const val lifecycleViewModelKtx =
+            "androidx.lifecycle:lifecycle-viewmodel-ktx:$LifecycleRunTimeKtx"
         const val splashScreen = "androidx.core:core-splashscreen:$SplashScreenApi"
     }
 
@@ -63,16 +66,19 @@ object Libraries {
         const val composeUiUtil = "androidx.compose.ui:ui-util"
         const val constraintLayoutCompose =
             "androidx.constraintlayout:constraintlayout-compose:$ConstraintLayoutCompose"
+        const val materialIconsExtended =
+            "androidx.compose.material:material-icons-extended"
     }
 
     object Google {
         const val gson = "com.google.code.gson:gson:$GsonVersion"
         const val guava="com.google.guava:guava:$GuavaAndroid"
+        const val material = "com.google.android.material:material:${Version.Material}"
     }
 
     object Accompanist {
         const val pager =
-            "com.google.accompanist:accompanist-pager:0.29.2-rc"
+            "com.google.accompanist:accompanist-pager:${Version.Accompanist}"
         const val swiperefresh =
             "com.google.accompanist:accompanist-swiperefresh:${Version.Accompanist}"
         const val indicators =
@@ -101,6 +107,7 @@ object Libraries {
         const val exoplayer = "androidx.media3:media3-exoplayer:$Media3"
         const val expplayerDash = "androidx.media3:media3-exoplayer-dash:$Media3"
         const val media3Ui = "androidx.media3:media3-ui:$Media3"
+        const val transformer = "androidx.media3:media3-transformer:$Media3"
     }
 
     object Test {

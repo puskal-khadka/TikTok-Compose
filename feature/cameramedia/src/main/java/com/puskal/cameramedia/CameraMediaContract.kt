@@ -1,7 +1,11 @@
 package com.puskal.cameramedia
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.InvertColors
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.runtime.Composable
 import com.puskal.data.model.TemplateModel
 import com.puskal.theme.R
 
@@ -30,15 +34,22 @@ enum class PermissionType {
 
 enum class CameraController(
     @StringRes val title: Int,
-    @DrawableRes val icon: Int
+    val iconRes: Int? = null,
+    val iconVector: ImageVector? = null,
 ) {
-    FLIP(title = R.string.flip, icon = R.drawable.ic_flip),
-    SPEED(title = R.string.speed, icon = R.drawable.ic_speed),
-    BEAUTY(title = R.string.beauty, icon = R.drawable.ic_profile_fill),
-    FILTER(title = R.string.filters, icon = R.drawable.ic_filter),
-    MIRROR(title = R.string.mirror, icon = R.drawable.ic_mirror),
-    TIMER(title = R.string.timer, icon = R.drawable.ic_timer),
-    FLASH(title = R.string.flash, icon = R.drawable.ic_flash),
+    FLIP(title = R.string.flip, iconRes = R.drawable.ic_flip),
+    SPEED(title = R.string.speed, iconRes = R.drawable.ic_speed),
+    BEAUTY(title = R.string.beauty, iconRes = R.drawable.ic_profile_fill),
+    FILTERS(title = R.string.filters, iconVector = Icons.Filled.InvertColors),
+    TIMER(title = R.string.timer, iconRes = R.drawable.ic_timer),
+    FLASH(title = R.string.flash, iconRes = R.drawable.ic_flash),
+}
+
+@Composable
+fun CameraController.icon(): ImageVector {
+    iconVector?.let { return it }
+    val resId = iconRes ?: error("No icon defined for $this")
+    return ImageVector.vectorResource(resId)
 }
 
 enum class CameraCaptureOptions(val value: String) {

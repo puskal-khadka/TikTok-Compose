@@ -2,6 +2,22 @@ plugins {
     `kotlin-dsl`
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    options.release.set(17)
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions.jvmTarget = "17"
+}
+
 gradlePlugin {
     plugins {
         register("AndroidCoreLibraryPlugin") {
@@ -18,8 +34,8 @@ repositories {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:7.2.2")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10")
+    implementation("com.android.tools.build:gradle:8.4.0")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.25")
     implementation("com.google.dagger:hilt-android-gradle-plugin:2.44.2")
 
 }

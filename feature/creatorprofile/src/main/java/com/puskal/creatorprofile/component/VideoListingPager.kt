@@ -43,8 +43,8 @@ fun VideoListingPager(
     viewModel: CreatorProfileViewModel,
     onClickVideo: (video: VideoModel, index: Int) -> Unit
 ) {
-    val pagerState = rememberPagerState()
     val tabs = ProfilePagerTabs.values().asList()
+    val pagerState = rememberPagerState(pageCount = { tabs.size })
     val coroutineScope = rememberCoroutineScope()
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
@@ -102,7 +102,7 @@ fun VideoListingPager(
         }
         item {
             HorizontalPager(
-                pageCount = tabs.size, state = pagerState
+                state = pagerState
             ) {
                 when (it) {
                     0 -> {

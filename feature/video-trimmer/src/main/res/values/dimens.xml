@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- VIDEO TRIMMER-->
+    <dimen name="progress_video_line_height">2dp</dimen>
+    <dimen name="frames_video_height">40dip</dimen>
+    <!-- iconVideoPlay -->
+    <dimen name="_50sdp">50dp</dimen>
+
+    <!-- layout margins -->
+    <dimen name="_10sdp">10dp</dimen>
+    <dimen name="_5sdp">5dp</dimen>
+    <dimen name="_3sdp">3dp</dimen>
+    <dimen name="_4sdp">4dp</dimen>
+    <dimen name="_2sdp">2dp</dimen>
+
+    <!-- paddings -->
+    <dimen name="_12sdp">12dp</dimen>
+    <dimen name="_37sdp">37dp</dimen>
+    <dimen name="_54sdp">54dp</dimen>
+
+    <!-- text sizes -->
+    <dimen name="text_small">12sp</dimen> <!-- adjust as needed for your design -->
+</resources>

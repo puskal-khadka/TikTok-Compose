@@ -21,8 +21,10 @@ import androidx.compose.ui.text.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.puskal.composable.CustomButton
 import com.puskal.core.AppContract
+import com.puskal.core.SessionManager
 import com.puskal.core.extension.Space
 import com.puskal.loginwithemailphone.LoginEmailPhoneEvent
 import com.puskal.loginwithemailphone.LoginWithEmailPhoneViewModel
@@ -35,8 +37,12 @@ import com.puskal.theme.R
  */
 
 @Composable
-fun EmailUsernameTabScreen(viewModel: LoginWithEmailPhoneViewModel) {
+fun EmailUsernameTabScreen(
+    navController: NavController,
+    viewModel: LoginWithEmailPhoneViewModel
+) {
     val email by viewModel.email.collectAsState()
+    val password by viewModel.password.collectAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -49,14 +55,17 @@ fun EmailUsernameTabScreen(viewModel: LoginWithEmailPhoneViewModel) {
         ) {
             EmailField(email, viewModel)
             8.dp.Space()
+            PasswordField(password, viewModel)
+            8.dp.Space()
             PrivacyPolicyText {}
             16.dp.Space()
             CustomButton(
                 buttonText = stringResource(id = R.string.next),
                 modifier = Modifier.fillMaxWidth(),
-                isEnabled = email.first.isNotEmpty()
+                isEnabled = email.first.isNotEmpty() && password.isNotEmpty()
             ) {
-
+                SessionManager.logIn(email.first)
+                navController.popBackStack()
             }
         }
 
@@ -87,8 +96,9 @@ fun EmailField(email: Pair<String, String?>, viewModel: LoginWithEmailPhoneViewM
         onValueChange = { viewModel.onTriggerEvent(LoginEmailPhoneEvent.OnChangeEmailEntry(it)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         singleLine = true,
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = Color.Transparent,
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = Color.Transparent,
+            unfocusedContainerColor = Color.Transparent,
             focusedIndicatorColor = SubTextColor,
             unfocusedIndicatorColor = SubTextColor,
         ),
@@ -122,6 +132,34 @@ fun EmailField(email: Pair<String, String?>, viewModel: LoginWithEmailPhoneViewM
             focusRequester.requestFocus()
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PasswordField(password: String, viewModel: LoginWithEmailPhoneViewModel) {
+    TextField(
+        modifier = Modifier.fillMaxWidth(),
+        value = password,
+        textStyle = MaterialTheme.typography.labelLarge,
+        onValueChange = {
+            viewModel.onTriggerEvent(LoginEmailPhoneEvent.OnChangePassword(it))
+        },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        singleLine = true,
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = Color.Transparent,
+            unfocusedContainerColor = Color.Transparent,
+            focusedIndicatorColor = SubTextColor,
+            unfocusedIndicatorColor = SubTextColor,
+        ),
+        placeholder = {
+            Text(
+                text = stringResource(id = R.string.password),
+                style = MaterialTheme.typography.labelLarge,
+                color = SubTextColor
+            )
+        }
+    )
 }
 
 

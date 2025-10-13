@@ -73,8 +73,9 @@ fun CreatorVideoPagerScreen(
                     placeholder = {
                         Text(text = stringResource(R.string.add_comment), color = SubTextColor)
                     },
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        containerColor = Color.Black,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = Color.Black,
+                        unfocusedContainerColor = Color.Black,
                         unfocusedBorderColor = Color.Transparent
                     ),
                     modifier = Modifier

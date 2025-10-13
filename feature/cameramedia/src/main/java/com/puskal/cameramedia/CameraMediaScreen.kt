@@ -38,9 +38,9 @@ fun CameraMediaScreen(
     navController: NavController,
     cameraMediaViewModel: CameraMediaViewModel = hiltViewModel()
 ) {
-    val pagerState = rememberPagerState()
-    val coroutineScope = rememberCoroutineScope()
     val tabs = Tabs.values().asList()
+    val pagerState = rememberPagerState(pageCount = { tabs.size })
+    val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
     val minimumScreenBrightness = 0.25f
 
@@ -68,7 +68,6 @@ fun CameraMediaScreen(
 
             Box(modifier = Modifier.weight(1f)) {
                 HorizontalPager(
-                    pageCount = tabs.size,
                     state = pagerState,
                     userScrollEnabled = false
                 ) { page ->

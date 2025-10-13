@@ -19,6 +19,16 @@ object DestinationRoute {
     const val MY_PROFILE_ROUTE = "my_profile_route"
     const val FRIENDS_ROUTE = "friends_route"
     const val CAMERA_ROUTE = "camera_route"
+    const val CHOOSE_SOUND_ROUTE = "choose_sound_route"
+
+    const val VIDEO_EDIT_ROUTE = "video_edit_route"
+    const val FORMATTED_VIDEO_EDIT_ROUTE = "$VIDEO_EDIT_ROUTE/{${PassedKey.VIDEO_URI}}"
+
+    const val VIDEO_TRIM_ROUTE = "video_trim_route"
+    const val FORMATTED_VIDEO_TRIM_ROUTE = "$VIDEO_TRIM_ROUTE/{${PassedKey.VIDEO_URI}}"
+
+    const val POST_VIDEO_ROUTE = "post_video_route"
+    const val FORMATTED_POST_VIDEO_ROUTE = "$POST_VIDEO_ROUTE/{${PassedKey.VIDEO_URI}}"
 
     const val AUTHENTICATION_ROUTE = "authentication_route"
     const val LOGIN_OR_SIGNUP_WITH_PHONE_EMAIL_ROUTE = "login_signup_phone_email_route"
@@ -28,6 +38,7 @@ object DestinationRoute {
     object PassedKey {
         const val USER_ID = "user_id"
         const val VIDEO_INDEX = "video_index"
+        const val VIDEO_URI = "video_uri"
     }
 }
 

@@ -1,13 +1,19 @@
 package com.puskal.cameramedia.tabs
 
-import android.util.Log
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.Preview
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.view.PreviewView
+import com.otaliastudios.cameraview.CameraListener
+import com.otaliastudios.cameraview.CameraView
+import com.otaliastudios.cameraview.controls.Engine
+import com.otaliastudios.cameraview.PictureResult
+import com.otaliastudios.cameraview.VideoResult
+import com.otaliastudios.cameraview.controls.Mode
+import com.otaliastudios.cameraview.controls.Facing
+import com.otaliastudios.cameraview.gesture.Gesture
+import com.otaliastudios.cameraview.gesture.GestureAction
+import java.io.File
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -35,17 +41,28 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.content.ContextCompat
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.shouldShowRationale
+import android.content.Context
+import android.content.ContentValues
+import android.media.MediaScannerConnection
+import android.os.Environment
+import android.provider.MediaStore
+import android.graphics.Bitmap
+import android.graphics.Matrix
+import java.io.FileOutputStream
 import com.puskal.cameramedia.*
+import com.puskal.cameramedia.filter.FilterBottomSheet
 import com.puskal.composable.CaptureButton
 import com.puskal.core.extension.MediumSpace
 import com.puskal.core.extension.Space
 import com.puskal.core.utils.openAppSetting
+import com.puskal.core.DestinationRoute
 import com.puskal.theme.LightGreenColor
 import com.puskal.theme.R
 import com.puskal.theme.TealColor
@@ -54,12 +71,15 @@ import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import dev.chrisbanes.snapper.SnapOffsets
 import dev.chrisbanes.snapper.rememberLazyListSnapperLayoutInfo
 import kotlinx.coroutines.launch
-
+import kotlinx.coroutines.Dispatchers
+import com.otaliastudios.cameraview.filter.Filters
+import com.otaliastudios.cameraview.markers.DefaultAutoFocusMarker
+import com.otaliastudios.cameraview.filter.Filter as CameraFilter
+import com.daasuu.mp4compose.composer.Mp4Composer
 
 /**
  * Created by Puskal Khadka on 4/2/2023.
  */
-
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -81,18 +101,26 @@ fun CameraScreen(
     }
 
     val fileLauncher =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.PickMultipleVisualMedia(),
-            onResult = {})
-
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.PickMultipleVisualMedia()
+        ) { uris ->
+            uris.firstOrNull()?.let { uri ->
+                navController.navigate("${DestinationRoute.VIDEO_EDIT_ROUTE}/${Uri.encode(uri.toString())}")
+            }
+        }
 
     Column(modifier = Modifier.fillMaxSize()) {
         if (multiplePermissionState.permissions[0].status.isGranted) {
-            CameraPreview(cameraOpenType,
+            CameraPreview(
+                navController = navController,
+                cameraOpenType = cameraOpenType,
                 onClickCancel = { navController.navigateUp() },
                 onClickOpenFile = {
                     fileLauncher.launch(pickVisualMediaRequest)
+                },
+                onClickAddSound = {
+                    navController.navigate(DestinationRoute.CHOOSE_SOUND_ROUTE)
                 }
-
             )
         } else {
             CameraMicrophoneAccessPage(multiplePermissionState.permissions[1].status.isGranted,
@@ -114,7 +142,6 @@ fun CameraScreen(
         }
     }
 }
-
 
 @Composable
 fun CameraMicrophoneAccessPage(
@@ -218,45 +245,120 @@ fun CameraMicrophoneAccessPage(
             cameraOpenType = cameraOpenType,
             onClickEffect = { },
             onClickOpenFile = onClickOpenFile,
-            onclickCameraCapture = { },
+            onOptionChanged = {},
+            onClickCapture = { },
             isEnabledLayout = false
         )
     }
 }
 
-
 @Composable
 fun CameraPreview(
+    navController: NavController,
     cameraOpenType: Tabs,
     onClickCancel: () -> Unit,
     onClickOpenFile: () -> Unit,
+    onClickAddSound: () -> Unit,
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
-    val cameraProviderFuture = remember {
-        ProcessCameraProvider.getInstance(context)
+    var defaultCameraFacing by remember { mutableStateOf(Facing.FRONT) }
+    var showFilterSheet by remember { mutableStateOf(false) }
+    var selectedFilter by remember { mutableStateOf(Filters.NONE) }
+    var isMirror by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+
+    val cameraView = remember {
+        CameraView(context).apply {
+            setExperimental(true)
+            setEngine(Engine.CAMERA2)
+            setRequestPermissions(false)
+            mode = Mode.PICTURE
+            facing = defaultCameraFacing
+            mapGesture(Gesture.PINCH, GestureAction.ZOOM)
+            mapGesture(Gesture.TAP, GestureAction.AUTO_FOCUS)
+            mapGesture(Gesture.LONG_TAP, GestureAction.TAKE_PICTURE)
+            setAutoFocusMarker(DefaultAutoFocusMarker())
+        }
     }
-    var defaultCameraFacing by remember { mutableStateOf(CameraSelector.DEFAULT_FRONT_CAMERA) }
-    val cameraProvider = cameraProviderFuture.get()
-    val preview = remember { Preview.Builder().build() }
+
+    DisposableEffect(lifecycleOwner) {
+        cameraView.setLifecycleOwner(lifecycleOwner)
+        onDispose { cameraView.setLifecycleOwner(null) }
+    }
+    LaunchedEffect(selectedFilter) {
+        cameraView.filter = selectedFilter.newInstance()
+    }
+    LaunchedEffect(defaultCameraFacing) {
+        cameraView.facing = defaultCameraFacing
+    }
+    LaunchedEffect(isMirror) {
+        cameraView.scaleX = if (isMirror) -1f else 1f
+    }
+    var isRecording by remember { mutableStateOf(false) }
+    var recordedFile by remember { mutableStateOf<File?>(null) }
+
+    fun handleVideoFile(file: File) {
+        val galleryUri = saveVideoToGallery(context, file)
+        isRecording = false
+        val uriString = (galleryUri ?: Uri.fromFile(file)).toString()
+        navController.navigate(
+            "${DestinationRoute.VIDEO_EDIT_ROUTE}/${Uri.encode(uriString)}"
+        )
+    }
+
+    DisposableEffect(cameraView) {
+        val listener = object : CameraListener() {
+            override fun onPictureTaken(result: PictureResult) {
+                val file = File(context.filesDir, "image_${'$'}{System.currentTimeMillis()}.jpg")
+                result.toBitmap { bitmap ->
+                    val processed = if (isMirror) bitmap?.mirrorHorizontally() else bitmap
+                    processed?.let { bmp ->
+                        coroutineScope.launch(Dispatchers.IO) {
+                            FileOutputStream(file).use { out ->
+                                bmp.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                            }
+                        }
+                    }
+                }
+            }
+
+            override fun onVideoTaken(result: VideoResult) {
+                val srcFile = recordedFile ?: result.getFile()
+                if (isMirror) {
+                    val mirrorFile = File(context.filesDir, "mirror_${'$'}{srcFile.name}")
+                    Mp4Composer(srcFile.absolutePath, mirrorFile.absolutePath)
+                        .flipHorizontal(true)
+                        .listener(object : Mp4Composer.Listener {
+                            override fun onProgress(progress: Double) {}
+                            override fun onCurrentWrittenVideoTime(timeUs: Long) {}
+                            override fun onCanceled() {}
+                            override fun onFailed(exception: Exception) {
+                                coroutineScope.launch { handleVideoFile(srcFile) }
+                            }
+
+                            override fun onCompleted() {
+                                coroutineScope.launch { handleVideoFile(mirrorFile) }
+                                srcFile.delete()
+                            }
+                        })
+                        .start()
+                } else {
+                    coroutineScope.launch { handleVideoFile(srcFile) }
+                }
+                recordedFile = null
+            }
+        }
+        cameraView.addCameraListener(listener)
+        onDispose { cameraView.removeCameraListener(listener) }
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         AndroidView(
-            factory = {
-                val cameraPreview = PreviewView(it)
-                cameraProviderFuture.addListener({
-                    preview.also {
-                        it.setSurfaceProvider(cameraPreview.surfaceProvider)
-                    }
-                    try {
-                        cameraProvider.unbindAll()
-                        cameraProvider.bindToLifecycle(lifecycleOwner, defaultCameraFacing, preview)
-                    } catch (e: Exception) {
-                        Log.e("camera", "camera preview exception :${e.message}")
-                    }
-                }, ContextCompat.getMainExecutor(context))
-                cameraPreview
-            }, modifier = Modifier.fillMaxSize()
+            factory = { cameraView },
+            modifier = Modifier
+                .fillMaxSize()
+                .graphicsLayer { scaleX = if (isMirror) -1f else 1f }
         )
 
         Box(
@@ -271,10 +373,40 @@ fun CameraPreview(
                 cameraOpenType = cameraOpenType,
                 onClickEffect = { },
                 onClickOpenFile = onClickOpenFile,
-                onclickCameraCapture = { },
+                onOptionChanged = { option ->
+                    when (option) {
+                        CameraCaptureOptions.PHOTO -> cameraView.mode = Mode.PICTURE
+                        CameraCaptureOptions.VIDEO,
+                        CameraCaptureOptions.FIFTEEN_SECOND,
+                        CameraCaptureOptions.SIXTY_SECOND -> cameraView.mode = Mode.VIDEO
+                        else -> {}
+                    }
+                },
+                onClickCapture = { option ->
+                    when (option) {
+                        CameraCaptureOptions.PHOTO -> {
+                            cameraView.takePicture()
+                        }
+                        CameraCaptureOptions.VIDEO,
+                        CameraCaptureOptions.FIFTEEN_SECOND,
+                        CameraCaptureOptions.SIXTY_SECOND -> {
+                            if (isRecording) {
+                                cameraView.stopVideo()
+                            } else {
+                                val file = File(
+                                    context.filesDir,
+                                    "video_${'$'}{System.currentTimeMillis()}.mp4"
+                                )
+                                recordedFile = file
+                                cameraView.takeVideo(file)
+                                isRecording = true
+                            }
+                        }
+                        else -> {}
+                    }
+                },
                 isEnabledLayout = true
             )
-
 
             CameraSideControllerSection(
                 modifier = Modifier
@@ -284,18 +416,13 @@ fun CameraPreview(
             ) {
                 when (it) {
                     CameraController.FLIP -> {
-                        defaultCameraFacing =
-                            if (defaultCameraFacing == CameraSelector.DEFAULT_FRONT_CAMERA) CameraSelector.DEFAULT_BACK_CAMERA else CameraSelector.DEFAULT_FRONT_CAMERA
+                        defaultCameraFacing = if (defaultCameraFacing == Facing.FRONT) Facing.BACK else Facing.FRONT
+                    }
+                    CameraController.FILTERS -> {
+                        showFilterSheet = true
                     }
                     else -> {}
                 }
-            }
-
-            LaunchedEffect(key1 = defaultCameraFacing) {
-                cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(
-                    lifecycleOwner, defaultCameraFacing, preview
-                )
             }
 
             Icon(painter = painterResource(id = R.drawable.ic_cancel),
@@ -308,26 +435,24 @@ fun CameraPreview(
                         onClickCancel()
                     })
 
-            Row(
+            MusicBarLayout(
                 modifier = Modifier.align(Alignment.TopCenter),
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    painterResource(id = R.drawable.ic_music_note),
-                    contentDescription = null,
-                    modifier = Modifier.size(18.dp),
-                )
-                Text(
-                    text = stringResource(id = R.string.add_sound),
-                    style = MaterialTheme.typography.labelLarge
+                onClickAddSound = onClickAddSound
+            )
+            if (showFilterSheet) {
+                FilterBottomSheet(
+                    currentFilter = selectedFilter,
+                    onSelectFilter = {
+                        selectedFilter = it
+                        showFilterSheet = false
+                    },
+                    onDismiss = { showFilterSheet = false }
                 )
             }
         }
     }
 
 }
-
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalSnapperApi::class)
 @Composable
@@ -336,7 +461,8 @@ fun FooterCameraController(
     cameraOpenType: Tabs,
     onClickEffect: () -> Unit,
     onClickOpenFile: () -> Unit,
-    onclickCameraCapture: () -> Unit,
+    onOptionChanged: (CameraCaptureOptions) -> Unit = {},
+    onClickCapture: (CameraCaptureOptions) -> Unit,
     isEnabledLayout: Boolean = false
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -346,7 +472,7 @@ fun FooterCameraController(
     val horizontalContentPadding = screenHalfWidth.minus(itemHorizontalPadding.div(2))
     val lazyListState = rememberLazyListState(
         initialFirstVisibleItemIndex = when (cameraOpenType) {
-            Tabs.CAMERA -> 2
+            Tabs.CAMERA -> 0
             Tabs.STORY -> 1
             else -> 0
         }
@@ -359,9 +485,10 @@ fun FooterCameraController(
     )
     val captureOptions = remember {
         when (cameraOpenType) {
-            Tabs.CAMERA -> CameraCaptureOptions.values().toMutableList().apply {
-                removeAll(listOf(CameraCaptureOptions.TEXT, CameraCaptureOptions.VIDEO))
-            }
+            Tabs.CAMERA -> listOf(
+                CameraCaptureOptions.VIDEO,
+                CameraCaptureOptions.PHOTO
+            )
             Tabs.STORY -> CameraCaptureOptions.values().toMutableList().apply {
                 removeAll(
                     listOf(CameraCaptureOptions.FIFTEEN_SECOND, CameraCaptureOptions.SIXTY_SECOND)
@@ -369,6 +496,11 @@ fun FooterCameraController(
             }
             else -> emptyList()
         }
+    }
+
+    val selectedIndex = layoutInfo.currentItem?.index ?: 0
+    LaunchedEffect(selectedIndex) {
+        captureOptions.getOrNull(selectedIndex)?.let { onOptionChanged(it) }
     }
 
     Column(
@@ -443,7 +575,11 @@ fun FooterCameraController(
             CaptureButton(
                 modifier = Modifier.alpha(alphaForInteractiveView(isEnabledLayout)),
                 color = captureButtonColor,
-                onClickCapture = onclickCameraCapture
+                onClickCapture = {
+                    captureOptions.getOrNull(layoutInfo.currentItem?.index ?: -1)?.let { option ->
+                        onClickCapture(option)
+                    }
+                }
             )
             Column(horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -466,36 +602,44 @@ fun FooterCameraController(
     }
 }
 
-
 @Composable
 fun CameraSideControllerSection(
     modifier: Modifier,
-    defaultCameraFacing: CameraSelector,
+    defaultCameraFacing: Facing,
     onClickController: (CameraController) -> Unit
 ) {
-    val controllers =
-        if (defaultCameraFacing == CameraSelector.DEFAULT_BACK_CAMERA) CameraController.values()
-            .toMutableList().apply { remove(CameraController.MIRROR) }
-        else CameraController.values().toMutableList().apply { remove(CameraController.FLASH) }
+    val controllers = CameraController.values().toMutableList().apply {
+        if (defaultCameraFacing == Facing.FRONT) remove(CameraController.FLASH)
+    }
 
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(14.dp)) {
-        controllers.forEach {
-            ControllerItem(it, onClickController)
+        controllers.forEach { controller ->
+            val enabled = when (controller) {
+                CameraController.FLASH -> defaultCameraFacing == Facing.BACK
+                else -> true
+            }
+            ControllerItem(controller, enabled, onClickController)
         }
     }
 }
 
 @Composable
 fun ControllerItem(
-    cameraController: CameraController, onClickController: (CameraController) -> Unit
+    cameraController: CameraController,
+    enabled: Boolean = true,
+    onClickController: (CameraController) -> Unit
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(
-        4.dp, alignment = Alignment.CenterVertically
-    ), horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.clickable {
-        onClickController(cameraController)
-    }) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(4.dp, alignment = Alignment.CenterVertically),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .alpha(if (enabled) 1f else 0.4f)
+            .clickable(enabled = enabled) {
+                onClickController(cameraController)
+            }
+    ) {
         Icon(
-            painterResource(id = cameraController.icon),
+            imageVector = cameraController.icon(),
             contentDescription = null,
             modifier = Modifier.size(27.dp),
             tint = Color.White.copy(alpha = 0.8f)
@@ -513,8 +657,28 @@ val pickVisualMediaRequest by lazy {
 
 fun alphaForInteractiveView(isEnabledLayout: Boolean): Float = if (isEnabledLayout) 1f else 0.28f
 
+private fun saveVideoToGallery(context: Context, file: File): Uri? {
+    val values = ContentValues().apply {
+        put(MediaStore.Video.Media.DISPLAY_NAME, file.name)
+        put(MediaStore.Video.Media.MIME_TYPE, "video/mp4")
+        put(MediaStore.Video.Media.RELATIVE_PATH, Environment.DIRECTORY_MOVIES)
+    }
+    val resolver = context.contentResolver
+    val uri = resolver.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values)
+    uri?.let { outputUri ->
+        resolver.openOutputStream(outputUri)?.use { output ->
+            file.inputStream().use { input ->
+                input.copyTo(output)
+            }
+        }
+        MediaScannerConnection.scanFile(context, arrayOf(outputUri.toString()), null, null)
+    }
+    return uri
+}
 
-
-
+private fun Bitmap.mirrorHorizontally(): Bitmap {
+    val matrix = Matrix().apply { preScale(-1f, 1f) }
+    return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
+}
 
 

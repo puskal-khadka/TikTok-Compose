@@ -24,11 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.puskal.core.extension.Space
 import com.puskal.data.model.CommentList
+import com.puskal.commentlisting.CommentListViewModel
 import com.puskal.theme.DarkBlue
 import com.puskal.theme.GrayMainColor
 import com.puskal.theme.R
@@ -42,7 +42,7 @@ import com.puskal.theme.SubTextColor
 
 @Composable
 fun CommentListScreen(
-    viewModel: CommentListViewModel = hiltViewModel(),
+    viewModel: CommentListViewModel,
     onClickCancel: () -> Unit
 ) {
     val viewState by viewModel.viewState.collectAsState()
@@ -224,8 +224,9 @@ fun CommentUserField() {
                 placeholder = {
                     Text(text = stringResource(R.string.add_comment))
                 },
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    containerColor = GrayMainColor,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedContainerColor = GrayMainColor,
+                    unfocusedContainerColor = GrayMainColor,
                     unfocusedBorderColor = Color.Transparent
                 ),
                 modifier = Modifier.height(46.dp),

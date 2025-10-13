@@ -46,7 +46,17 @@ This app consist of following modules:
 - common
 - core
 
+`VideoEditScreen` supports filters only when the `enableFilters` parameter is
+set to `true`.
+`Mirror` in the camera preview works only when using the front camera.
+
 <img src="screenshots/tiktokcompose_modularization.jpg" width=760  />
+
+<br/>
+
+## Video Feed Gesture Handling
+For details on how swiping vertically changes pages in the feed, refer to
+[docs/video_feed_swipe_analysis.md](docs/video_feed_swipe_analysis.md).
 
 <br/>
 
@@ -70,4 +80,5 @@ You are always welcome to contribute to this project. For contributing, feel fre
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
-    limitations under the License.
+limitations under the License.
+

@@ -1,6 +1,8 @@
 package com.puskal.tiktokcompose.component
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,7 +28,7 @@ fun BottomBar(
 ) {
     NavigationBar(
         modifier = Modifier
-            .height(52.dp)
+            .height(92.dp)
             .shadow(elevation = 16.dp)
             .padding(top = 2.dp)
     ) {
@@ -100,4 +102,4 @@ fun RowScope.BottomItem(
     )
 }
 
-private val BottomBarItemVerticalOffset = 10.dp
+private val BottomBarItemVerticalOffset = 0.dp

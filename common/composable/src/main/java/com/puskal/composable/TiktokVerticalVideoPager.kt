@@ -6,7 +6,10 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.pager.*
+import androidx.compose.foundation.pager.PagerDefaults
+import androidx.compose.foundation.pager.PagerSnapDistance
+import androidx.compose.foundation.pager.VerticalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material3.Icon
@@ -54,21 +57,21 @@ fun TikTokVerticalVideoPager(
     onClickFavourite: (isFav: Boolean) -> Unit = {},
     onClickShare: (() -> Unit)? = null
 ) {
-    val pagerState = rememberPagerState(initialPage = initialPage ?: 0)
+    val pagerState = rememberPagerState(
+        initialPage = initialPage ?: 0,
+        pageCount = { videos.size }
+    )
     val coroutineScope = rememberCoroutineScope()
     val localDensity = LocalDensity.current
 
     val fling = PagerDefaults.flingBehavior(
-        state = pagerState, lowVelocityAnimationSpec = tween(
-            easing = LinearEasing, durationMillis = 300
-        )
+        state = pagerState,
+        pagerSnapDistance = PagerSnapDistance.atMost(1)
     )
 
     VerticalPager(
-        pageCount = videos.size,
         state = pagerState,
         flingBehavior = fling,
-        beyondBoundsPageCount = 1,
         modifier = modifier
     ) {
         var pauseButtonVisibility by remember { mutableStateOf(false) }
