@@ -19,3 +19,4 @@ local.properties
 common/videotrimmer/build
 common/theme/build
 common/composable/build
+.claude/
